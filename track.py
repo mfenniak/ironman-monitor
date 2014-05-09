@@ -3,10 +3,14 @@ import time
 import random
 from bs4 import BeautifulSoup
 from twilio.rest import TwilioRestClient
-from collections import OrderedDict, namedtuple
 import config
 import string
 import traceback
+from collections import namedtuple
+try:
+    from collections import OrderedDict, namedtuple
+except ImportError:
+    from ordereddict import OrderedDict
 
 twilio_client = TwilioRestClient(config.twilio_sid, config.twilio_auth)
 Notification = namedtuple("Notification", ["key", "new_value"])
@@ -28,12 +32,12 @@ def main():
             print "--- Begin Error ---"
             traceback.print_exc()
             print "--- End Error ---"
-            time.sleep(config.error_wait_interval.total_seconds())
+            time.sleep(config.error_wait_interval.seconds)
 
     while True:
         try:
             print "Sleeping %s..." % (config.poll_interval)
-            time.sleep(config.poll_interval.total_seconds())
+            time.sleep(config.poll_interval.seconds)
             new_state = fetch_current_state()
 
             notifications = []
@@ -53,7 +57,7 @@ def main():
             print "--- Begin Error ---"
             traceback.print_exc()
             print "--- End Error ---"
-            time.sleep(config.error_wait_interval.total_seconds())
+            time.sleep(config.error_wait_interval.seconds)
 
 
 def send_notifications(athlete, notifications):
