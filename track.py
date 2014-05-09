@@ -120,7 +120,7 @@ def fetch_current_state():
     state["Run Total Time"] = split_time
     state["Run Total Pace"] = pace
 
-    state["Random"] = random.random()
+    #state["Random"] = random.random()
 
     return state
 
