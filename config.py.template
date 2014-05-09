@@ -1,5 +1,10 @@
+from datetime import timedelta
+
 url = "http://tracking.ironmanlive.com/newathlete.php?rid=1143240091&race=mallorca70.3&bib=531&v=3.0&beta=&1399597200"
 twilio_sid = ""
 twilio_auth  = ""
 source_number = ""      # eg. +14031234567
 target_numbers = [""]   # eg. +14031234567
+
+poll_interval = timedelta(minutes=2)
+error_wait_interval = timedelta(minutes=1)
