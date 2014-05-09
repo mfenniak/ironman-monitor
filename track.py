@@ -7,10 +7,11 @@ import config
 
 twilio_client = TwilioRestClient(config.twilio_sid, config.twilio_auth)
 
-def main():
-    #print repr(fetch_current_state())
-    #import sys; sys.exit(0)
+def print_state(state):
+    for (key, val) in sorted(state.iteritems()):
+        print "%s%s%s" % (key, (" "*40)[:40-len(key)], val)
 
+def main():
     state = None
     while state == None:
         try:
@@ -102,12 +103,16 @@ def fetch_current_state():
     state["Bike Total Time"] = split_time
     state["Bike Total Pace"] = pace
 
+    swim_total = soup.find("strong", text="Swim Details").parent.parent.find("tfoot").find("tr")
+    split_name, distance, split_time, race_time, pace, div_rank, overall_rank, gender_rank = [x.text for x in swim_total.find_all("td")]
+    state["Swim Total Time"] = split_time
+    state["Swim Total Pace"] = pace
+
     #state["Random"] = random.random()
 
     return state
 
 
 if __name__ == "__main__":
+    #print_state(fetch_current_state())
     main()
-
-
